@@ -8,13 +8,29 @@
 import SwiftUI
 
 struct ProductGridView: View {
+    
+    @State var viewModel:ProductGridViewModel
+    
+    
+    init(filter:ProductFilter) {
+        self.viewModel = ProductGridViewModel(filter: filter)
+    }
+  
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            TwoColumnGrid {
+                ForEach(viewModel.product) { product in
+                    ProductRow(product: product)
+                }
+            }
+        }
+       
     }
 }
 
 struct ProductGridView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductGridView()
+        ProductGridView(filter: .all)
     }
 }
