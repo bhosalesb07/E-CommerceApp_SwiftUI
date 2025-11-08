@@ -11,6 +11,8 @@ import SwiftUI
 
 struct Home: View {
     @StateObject var viewModel = HomeviewModel()
+    @EnvironmentObject var cartManager: CartManager
+    @EnvironmentObject var tabaManager: TabManager
     fileprivate var NavigationBar: some View{
         VStack{
             HStack{
@@ -20,17 +22,19 @@ struct Home: View {
                 Spacer()
             }.overlay(alignment: .trailing) {
                 Button {
-                    
+                    tabaManager.selectedTab = 2
                 } label: {
                     ZStack{
                         Image(systemName: "cart.fill")
                             .foregroundStyle(.black)
-                        ZStack{
-                            Circle()
-                            Text("0")
-                                .foregroundStyle(.white)
-                                .font(.system(size: 14))
-                        }.offset(CGSize(width: 10, height: -10))
+                        if cartManager.displaytotalCartQuantity > 0{
+                            ZStack{
+                                Circle()
+                                Text("\(cartManager.displaytotalCartQuantity)")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 14))
+                            }.offset(CGSize(width: 10, height: -10))
+                        }
                     }
                     
                 }.padding(.trailing)

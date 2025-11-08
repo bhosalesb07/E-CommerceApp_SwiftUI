@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProductDetailView: View {
+    @EnvironmentObject var cartManager:CartManager
     let product:Product
     
     var body: some View {
@@ -22,7 +23,8 @@ struct ProductDetailView: View {
                         .font(.system(size: 15))
                         .padding(.bottom,15)
                     Button {
-                        
+                        cartManager.addToCart(product: product)
+                        cartManager.addtocartAlert = true
                     } label: {
                         Text("Add to cart")
                     }.buttonStyle(PrimarybuttonStyle())
@@ -30,6 +32,14 @@ struct ProductDetailView: View {
                 .padding(.horizontal)
                 Spacer()
             }
+            .alert("Added to cart", isPresented: $cartManager.addtocartAlert) {
+                Button("Ok") {
+                    
+                }
+            } message: {
+                Text("\(product.title) added to cart Successfully")
+            }
+
         }
     }
 }
